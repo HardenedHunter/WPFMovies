@@ -3,10 +3,103 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFMovies"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary Source="MainWindow.Resources.xaml" />
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="210" />
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="0" BorderBrush="Gray" BorderThickness="2" CornerRadius="5">
+            <DataGrid x:Name="DgvMovies" BorderBrush="{x:Null}"
+                      IsReadOnly="True"
+                      ItemsSource="{Binding MoviesView}" SelectedItem="{Binding SelectedMovie}"
+                      IsSynchronizedWithCurrentItem="True"
+                      ColumnHeaderStyle="{StaticResource CrimsonColumnHeaderStyle}"
+                      RowStyle="{StaticResource DataGridRowStyle}"
+                      CellStyle="{StaticResource DataGridCellStyle}"
+                      GridLinesVisibility="None" AutoGenerateColumns="False" HeadersVisibility="Column">
+                <DataGrid.GroupStyle>
+                    <GroupStyle ContainerStyle="{StaticResource GroupStyle}" />
+                </DataGrid.GroupStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Title}" Header="Title" CanUserResize="False" Width="*" />
+                    <DataGridTextColumn Binding="{Binding Genre}" Header="Genre" CanUserResize="False" Width="*" />
+                    <DataGridTextColumn Binding="{Binding Language}" Header="Language" Width="*" />
+                    <DataGridTextColumn Binding="{Binding BoxOffice, Converter={StaticResource CurrencyConverter}}"
+                                        Header="Box Office" Width="*" CellStyle="{StaticResource BoxOfficeCellStyle}"/>
+                    <DataGridTextColumn Binding="{Binding Year}" Header="Year" Width="*"
+                                        CellStyle="{StaticResource DataGridLastCellStyle}" />
+                </DataGrid.Columns>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#F34C4F" BorderThickness="0 0 0 8">
+                            <DataGrid ItemsSource="{Binding Awards}" x:Name="DgvDetails" BorderBrush="{x:Null}"
+                                      Width="571"
+                                      Style="{x:Null}"
+                                      ColumnHeaderStyle="{StaticResource CrimsonColumnHeaderStyle}"
+                                      RowStyle="{StaticResource DataGridRowStyle}"
+                                      CellStyle="{StaticResource DataGridCellStyle}"
+                                      GridLinesVisibility="None" AutoGenerateColumns="False" HeadersVisibility="Column">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Name}" Header="Award"
+                                                        Width="113" />
+                                    <DataGridTextColumn Binding="{Binding Category}" Header="Category"
+                                                        Width="*"
+                                                        CellStyle="{StaticResource DataGridLastCellStyle}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+            </DataGrid>
+        </Border>
+        <Grid Grid.Row="0" Grid.Column="1" Margin="10,15,0,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding IsGrouped}"
+                      Margin="10,10,0,0" Padding="0,0,0,0">
+                <TextBlock Padding="10 0 0 1">Group by genre</TextBlock>
+            </CheckBox>
+            <TextBlock Text="Title" Grid.Row="1" Grid.Column="0"/>
+            <TextBox x:Name="Title" Grid.Row="1" Grid.Column="1" Text="{Binding SelectedMovie.Title}"
+                     Margin="10,0,10,0" />
+            <TextBlock Text="Genre" Grid.Row="2" Grid.Column="0" Margin="0,10,0,0" />
+            <TextBox x:Name="Genre" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedMovie.Genre}"
+                     Margin="10,10,10,0" />
+            <TextBlock Text="Language" Grid.Row="3" Grid.Column="0" Margin="0,10,0,0" />
+            <TextBox x:Name="Language" Grid.Row="3" Grid.Column="1" Text="{Binding SelectedMovie.Language}"
+                     Margin="10,10,10,0" />
+            <TextBlock Text="Year" Grid.Row="4" Grid.Column="0" Margin="0,10,0,0" />
+            <TextBox x:Name="Year" Grid.Row="4" Grid.Column="1" Text="{Binding SelectedMovie.Year}"
+                     Margin="10,10,10,0" />
+            <TextBlock Text="Box Office" Grid.Row="5" Grid.Column="0" Margin="0,10,0,0" />
+            <TextBox x:Name="BoxOffice" Grid.Row="5" Grid.Column="1" Text="{Binding SelectedMovie.BoxOffice}"
+                     Margin="10,10,10,0" />
+            <Button x:Name="BtnDelete" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Content="Delete"
+                    Command="{Binding DeleteCommand}" CommandParameter="{Binding SelectedMovie}" Margin="0,10,0,0"
+                    Padding="10,0,10,0" Width="120"/>
+            <Button x:Name="BtnClearSelection" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center"
+                    Content="Clear selection"
+                    Command="{Binding ClearSelectionCommand}" CommandParameter="{Binding}" Margin="0,10,0,0"
+                    Padding="10,0,10,0" Width="120"/>
+        </Grid>
     </Grid>
 </Window>

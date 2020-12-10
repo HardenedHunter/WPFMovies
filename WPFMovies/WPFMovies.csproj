@@ -54,6 +54,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\ClearSelectionCommand.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Converters\CurrencyFormatConverter.cs" />
+    <Compile Include="Converters\LessConverter.cs" />
+    <Compile Include="Models\Award.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\AwardViewModel.cs" />
+    <Compile Include="ViewModels\MovieListViewModel.cs" />
+    <Compile Include="ViewModels\MovieViewModel.cs" />
+    <Page Include="MainWindow.Resources.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,6 +81,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -93,5 +107,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
